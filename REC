@@ -1,0 +1,168 @@
+# atp
+atp
+/ det nr de elem neg din vector, cu elem reale
+// a)met desc
+// b)met reducerii
+
+#include <stdio.h>
+
+int nrneg1(float x[], int ls, int ld)
+{
+    int rez;
+    if (ls == ld)
+    {
+        if (x[ls] < 0)
+        {
+            rez = 1;
+        }
+        else
+            rez = 0;
+    }
+    else
+    {
+        rez = nrneg1(x, ls, (ls + ld) / 2) + nrneg1(x, ((ls + ld) / 2) + 1, ld);
+    }
+
+    return rez;
+}
+
+// med reducerii cu functie recursive
+
+int nrneg2(float x[], int n)
+{
+    int rez;
+    if (n == 0)
+        rez = 0;
+    else
+    {
+        rez = nrneg2(x, n - 1);
+        if (x[n - 1] < 0)
+            rez++;
+    }
+    return rez;
+}
+
+int main()
+{
+    int n;
+    float x[10];
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++)
+        scanf("%f", &x[i]);
+
+    // met descomp
+    printf("Nr negative cu met descompunerii: %d\n", nrneg1(x, 0, n - 1));
+    // met reducerii
+    printf("Nr negative cu met reducerii: %d", nrneg2(x, n));
+
+    return 0;
+}
+
+
+
+
+
+
+
+// sa se det produsul scalar a doi vectori de n elemente, cu n citit de la tastatura
+
+#include <stdio.h>
+
+// a) met descompunerii
+
+float ps1(float x[], float y[], int ls, int ld)
+{
+    float s;
+    if (ls == ld)
+    {
+        s = x[ls] * y[ls];
+    }
+    else
+    {
+        s = ps1(x, y, ls, (ls + ld) / 2) + ps1(x, y, ((ls + ld) / 2) + 1, ld);
+    }
+
+    return s;
+}
+
+// b) met reducerii recursiv
+float ps2(float x[], float y[], int n)
+{
+    float p;
+    if (n == 0)
+    {
+        p = 0;
+    }
+    else
+    {
+        p = ps2(x, y, n - 1) + x[n - 1] * y[n - 1];
+    }
+
+    return p;
+}
+
+int main()
+{
+    int n;
+    printf("n = ");
+    scanf("%d", &n);
+
+    float x[n], y[n];
+
+    for (int i = 0; i < n; i++)
+    {
+        printf("x[%d] = ", i);
+        scanf("%f", &x[i]);
+    }
+    printf("\n");
+    for (int i = 0; i < n; i++)
+    {
+        printf("y[%d] = ", i);
+        scanf("%f", &y[i]);
+    }
+
+    // Met descompunerii
+    printf("\nprodusul scalar este: %.2f", ps1(x, y, 0, n - 1));
+    // Met reducerii recursiv
+    printf("\nprodusul scalar este: %.2f", ps2(x, y, n));
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// suma elem unui vector cu elem intregi cu nr impare cu met reducerii recursiv
+#include <stdio.h>
+
+int nrelemimp(int x[], int n)
+{
+    int rez;
+    if (n == 0)
+        rez = 0;
+    else
+    {
+        rez = nrelemimp(x, n - 1);
+        if (x[n - 1] % 2 == 1)
+            rez += x[n - 1];
+    }
+    return rez;
+}
+
+int main()
+{
+    int n, x[10];
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++)
+        scanf("%d", &x[i]);
+
+    printf("Suma elem impare este: %d", nrelemimp(x, n));
+}
